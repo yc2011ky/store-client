@@ -17,4 +17,6 @@ public abstract class AbstractComponent {
 		return this.settings;
 	}
 	
+	
+	
 }

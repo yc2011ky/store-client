@@ -1,5 +1,7 @@
 package com.lakala.support;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import com.lakala.client.Client;
@@ -57,6 +59,32 @@ public abstract class AbstractClient extends AbstractComponent implements Client
 	@Override
 	public void close() {
 		
+	}
+	
+	public Properties readProperties() throws IOException {
+		String localPath = ClassLoader.getSystemResource("").toString();
+		logger.info("------------->" + "es configuration file: " + localPath);
+		Properties props = new Properties();
+		FileInputStream in = null;
+		String dir = localPath + FILENAME;
+		int location = dir.indexOf(":") + 1;
+		dir = dir.substring(location);
+		if(logger.isDebugEnabled()) {
+			logger.debug("get configuration file in: " + dir);
+		}
+		in = new FileInputStream(dir);
+		props.load(in);
+		if(in != null) {
+			in.close();
+			in = null;
+			if(logger.isDebugEnabled()) {
+				logger.debug("close inpustream" + dir);
+			}
+		}
+		if(logger.isDebugEnabled()) {
+			logger.debug("read configuration successfully");
+		}
+		return props;
 	}
 	
 	
